@@ -1,14 +1,37 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.8)
+project(arm2_description)
 
-project(arm2.0)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
-find_package(catkin REQUIRED)
+# find dependencies
+find_package(ament_cmake REQUIRED)
 
-catkin_package()
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
-find_package(roslaunch)
+# Install directories
+install(DIRECTORY
+  config
+  launch
+  meshes
+  urdf
+  rviz
+  worlds
+  DESTINATION share/${PROJECT_NAME}/
+)
 
-foreach(dir config launch meshes urdf)
-	install(DIRECTORY ${dir}/
-		DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
-endforeach(dir)
+# Install Python scripts
+install(PROGRAMS
+  scripts/interactive_teach_pendant.py
+  scripts/cartesian_path_planner.py
+  scripts/workspace_analyzer.py
+  scripts/test_system.py
+  scripts/usage_guide.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()

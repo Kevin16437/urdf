@@ -1,0 +1,16 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Force specific files to have Unix line endings
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Force specific files to have Windows line endings  
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files
+*.STL binary
+*.stl binary
+*.mesh binary
+*.dae binary
